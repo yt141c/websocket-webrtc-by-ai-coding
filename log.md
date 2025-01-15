@@ -124,3 +124,104 @@ package.jsonに以下のスクリプトを追加:
 ### 次フェーズの準備
 フェーズ4（テストとデバッグ）に向けて、WebRTCの基本実装が完了しました。
 次は実際の通話テストとデバッグを行います。
+
+## フェーズ5: HTTPS/WSS対応
+実施日時: 2025/1/16 00:56-01:03
+
+### 1. セキュア通信の実装
+- HTTPSサーバーの実装
+  - 自己署名証明書の生成スクリプト作成
+  - HTTPSサーバーの実装（ポート3001）
+- セキュアWebSocketの実装
+  - WSSサーバーの実装（ポート8443）
+  - 同一の証明書を使用
+
+### 2. クライアントコードの更新
+- WebSocket接続のプロトコル自動切り替え
+  - HTTP → ws://
+  - HTTPS → wss://
+- エラーメッセージの改善
+  - HTTPS要件の説明を追加
+  - 接続エラーの詳細表示
+
+### 3. 開発環境の整備
+- 証明書生成の自動化
+  - generate-certsスクリプトの作成
+  - npmスクリプトへの統合
+- 開発用スクリプトの更新
+  - dev: HTTPSとWSSを使用
+  - dev:local: HTTP/WSを使用（localhost用）
+
+### 4. 動作確認
+- 異なるデバイスからの接続テスト
+  - PC（Chrome）: 192.168.50.76
+  - スマートフォン: 192.168.50.147
+  - localhost: ::1
+- WebSocket接続の確認
+  - クライアント接続の確認
+  - シグナリングメッセージの送受信
+  - ICE candidateの交換
+- 切断処理の確認
+
+### 5. セキュリティ対応
+- HTTPS/WSSの強制
+  - 非HTTPS時の警告表示
+  - localhost例外の追加
+- エラーハンドリングの強化
+  - 接続タイムアウトの実装
+  - エラーメッセージの詳細化
+
+### 次のステップ
+1. 本番環境向けの正式な証明書の導入
+2. WebSocketサーバーのセキュリティ強化
+3. シグナリングデータの暗号化
+4. ファイアウォール設定の最適化
+
+## 今後の課題
+1. ブラウザ互換性の向上
+2. エラーハンドリングの更なる改善
+3. 通話品質の最適化
+4. セキュリティ対策の強化
+   - 正式なSSL証明書の導入
+   - WebSocketの認証機能
+   - シグナリングデータの暗号化
+5. スケーラビリティの向上
+   - 複数ルーム対応
+   - サーバー負荷分散
+
+## 動作確認ログ
+実施日時: 2025/1/16 01:03
+
+### 1. 接続テスト結果
+```
+[1] Client 5 connected from ::ffff:192.168.50.76
+[1] Received message from client 5 (::ffff:192.168.50.76): offer
+[1] Received message from client 5 (::ffff:192.168.50.76): ice-candidate
+[1] Received message from client 5 (::ffff:192.168.50.76): ice-candidate
+[1] Received message from client 5 (::ffff:192.168.50.76): ice-candidate
+[1] Client 6 connected from ::1
+[1] Received message from client 6 (::1): offer
+[1] Received message from client 6 (::1): ice-candidate
+[1] Received message from client 6 (::1): ice-candidate
+[1] Received message from client 6 (::1): ice-candidate
+[1] Client 6 (::1) disconnected
+[1] Client 7 connected from ::ffff:192.168.50.147
+[1] Received message from client 7 (::ffff:192.168.50.147): offer
+[1] Received message from client 7 (::ffff:192.168.50.147): ice-candidate
+[1] Received message from client 7 (::ffff:192.168.50.147): ice-candidate
+[1] Received message from client 7 (::ffff:192.168.50.147): ice-candidate
+[1] Client 7 (::ffff:192.168.50.147) disconnected
+[1] Client 5 (::ffff:192.168.50.76) disconnected
+```
+
+### 2. 確認された動作
+- 異なるデバイスからの接続成功
+- WebSocketシグナリングの正常動作
+- ICE candidateの正常な交換
+- 接続・切断の適切な処理
+
+### 3. 次回の改善点
+1. IPv6アドレス表記の最適化
+2. クライアント識別子の永続化
+3. 接続状態の詳細なモニタリング
+4. ログ形式の標準化

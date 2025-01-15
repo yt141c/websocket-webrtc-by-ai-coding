@@ -7,8 +7,11 @@
     "typecheck": "tsc --noEmit",
     "build": "tsc",
     "watch": "tsc -w",
-    "start:server": "node dist/server.js",
-    "dev": "npm run build && concurrently \"npm run watch\" \"npm run start:server\" \"serve .\""
+    "start:wss": "node dist/wss-server.js",
+    "start:https": "node dist/https-server.js",
+    "generate-certs": "chmod +x scripts/generate-certs.sh && ./scripts/generate-certs.sh",
+    "dev:local": "npm run build && concurrently \"npm run watch\" \"npm run start:server\" \"serve --listen tcp://localhost:3000 .\"",
+    "dev": "npm run build && npm run generate-certs && concurrently \"npm run watch\" \"npm run start:wss\" \"npm run start:https\""
   },
   "keywords": [],
   "author": "",

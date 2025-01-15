@@ -26,3 +26,10 @@ yarn-error.log*
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# SSL Certificates
+certs/
+*.key
+*.crt
+*.csr
+*.pem

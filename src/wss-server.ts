@@ -1,5 +1,8 @@
 import { WebSocket, WebSocketServer } from 'ws';
 import { IncomingMessage } from 'http';
+import * as https from 'https';
+import * as fs from 'fs';
+import * as path from 'path';
 
 // 型定義
 interface SignalingMessage {
@@ -9,17 +12,15 @@ interface SignalingMessage {
     to?: string;
 }
 
+// HTTPSサーバーの設定
+const httpsServer = https.createServer({
+    key: fs.readFileSync(path.join(__dirname, '../certs/server.key')),
+    cert: fs.readFileSync(path.join(__dirname, '../certs/server.crt'))
+});
+
 // WebSocketサーバーの設定
 const wss = new WebSocketServer({
-    host: '0.0.0.0',  // すべてのネットワークインターフェースでリッスン
-    port: 8080,
-    // クライアントの接続を検証
-    verifyClient: (info: { origin: string; secure: boolean; req: IncomingMessage }) => {
-        const clientIP = info.req.socket.remoteAddress;
-        console.log(`Connection attempt from: ${clientIP}`);
-        // 同一ネットワークからの接続のみを許可
-        return true; // すべての接続を許可
-    }
+    server: httpsServer  // HTTPSサーバーにWebSocketサーバーを接続
 });
 
 // クライアント管理
@@ -93,9 +94,12 @@ function broadcastConnectedClients(): void {
     }
 }
 
-// サーバー起動時のログ
-console.log('WebSocket Signaling Server running on ws://0.0.0.0:8080');
-console.log('Accepting connections from all network interfaces');
+// サーバーの起動
+const WSS_PORT = 8443; // HTTPSのWebSocket用ポート
+httpsServer.listen(WSS_PORT, () => {
+    console.log(`Secure WebSocket Server (WSS) running on wss://0.0.0.0:${WSS_PORT}`);
+    console.log('Accepting secure WebSocket connections from all network interfaces');
+});
 
 // エラーハンドリング
 wss.on('error', (error) => {
