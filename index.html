@@ -12,8 +12,36 @@
     <div class="container">
         <button id="callButton" class="button">Call</button>
         <div id="loadingIndicator" class="loading-indicator hidden">Loading...</div>
-        <button id="muteButton" class="button hidden">Mute</button>
-        <button id="hangUpButton" class="button hidden">Hang Up</button>
+
+        <!-- 音声レベルメーター -->
+        <div class="audio-status hidden" id="audioStatus">
+            <div class="audio-status-item">
+                <span>マイク入力</span>
+                <div class="audio-meter">
+                    <div class="audio-meter-fill" id="localAudioMeter"></div>
+                </div>
+                <div class="audio-status-indicator" id="localAudioIndicator"></div>
+            </div>
+            <div class="audio-status-item">
+                <span>相手の音声</span>
+                <div class="audio-meter">
+                    <div class="audio-meter-fill" id="remoteAudioMeter"></div>
+                </div>
+                <div class="audio-status-indicator" id="remoteAudioIndicator"></div>
+            </div>
+        </div>
+
+        <!-- 接続状態表示 -->
+        <div id="connectionStatus" class="connection-status hidden">
+            接続状態: <span id="connectionStatusText">未接続</span>
+        </div>
+
+        <!-- コントロールボタン -->
+        <div class="controls">
+            <button id="muteButton" class="button hidden">Mute</button>
+            <button id="hangUpButton" class="button hidden">Hang Up</button>
+        </div>
+
         <div id="errorMessage" class="error-message hidden"></div>
     </div>
     <script src="dist/script.js"></script>

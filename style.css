@@ -112,3 +112,94 @@ body {
     background-color: #ccc;
     cursor: not-allowed;
 }
+
+/* 音声レベルメーター */
+.audio-meter {
+    width: 200px;
+    height: 20px;
+    background-color: #eee;
+    border-radius: 10px;
+    margin: 16px auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.audio-meter-fill {
+    height: 100%;
+    width: 0%;
+    background-color: #4CAF50;
+    transition: width 0.1s ease;
+    border-radius: 10px;
+}
+
+.audio-meter.speaking .audio-meter-fill {
+    background-color: #2196F3;
+}
+
+/* 音声状態表示 */
+.audio-status {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 16px;
+}
+
+.audio-status-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.audio-status-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #ccc;
+}
+
+.audio-status-indicator.active {
+    background-color: #4CAF50;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* 接続状態表示 */
+.connection-status {
+    margin: 16px;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.connection-status.connected {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+
+.connection-status.disconnected {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
