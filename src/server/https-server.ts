@@ -4,8 +4,8 @@ import * as path from 'path';
 
 // 自己署名証明書の設定
 const options = {
-    key: fs.readFileSync(path.join(__dirname, '../certs/server.key')),
-    cert: fs.readFileSync(path.join(__dirname, '../certs/server.crt'))
+    key: fs.readFileSync(path.join(__dirname, '../../certs/server.key')),
+    cert: fs.readFileSync(path.join(__dirname, '../../certs/server.crt'))
 };
 
 // HTTPSサーバーの作成

@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es2016",
+    "target": "ES2016",
     "module": "commonjs",
     "rootDir": "./src",
-    "outDir": "./dist",
+    "outDir": "./dist", // ベースでは dist 配下を想定
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -14,9 +14,9 @@
     ],
     "sourceMap": true
   },
-  "include": [
-    "src/**/*"
-  ],
+  // ここでは include/exclude を最小限にして、
+  // サーバーやクライアント用の tsconfig.*.json が上書きしていくイメージ
+  "include": [],
   "exclude": [
     "node_modules"
   ]
