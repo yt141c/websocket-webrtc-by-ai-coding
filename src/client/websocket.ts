@@ -1,4 +1,4 @@
-import { CallState, SignalingMessage } from './types';
+import { CallState, SignalingMessage } from '../types/types';
 import { updateConnectionStatus, showError } from './ui';
 import { handleSignalingMessage } from './webrtc';
 
@@ -33,7 +33,7 @@ export function connectWebSocket(state: CallState): Promise<void> {
                 resolve();
             };
 
-            state.websocket.onmessage = async (event) => {
+            state.websocket.onmessage = async (event: MessageEvent) => {
                 try {
                     const message = JSON.parse(event.data) as SignalingMessage;
                     console.log('Received WebSocket message:', message.type);
@@ -43,7 +43,7 @@ export function connectWebSocket(state: CallState): Promise<void> {
                 }
             };
 
-            state.websocket.onerror = (error) => {
+            state.websocket.onerror = (error: Event) => {
                 console.error('WebSocket error:', error);
                 updateConnectionStatus('シグナリングサーバーへの接続エラー');
                 clearTimeout(connectTimeout);

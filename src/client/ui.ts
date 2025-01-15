@@ -1,4 +1,4 @@
-import { Elements, CallState } from './types';
+import { Elements, CallState } from '../types/types';
 
 // DOM要素の取得と型安全な参照
 export const elements: Elements = {

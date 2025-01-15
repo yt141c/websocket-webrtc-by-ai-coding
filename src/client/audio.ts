@@ -1,4 +1,4 @@
-import { CallState } from './types';
+import { CallState } from '../types/types';
 import { showError, updateAudioMeter } from './ui';
 
 // AudioContextの初期化（ユーザーアクション時に呼び出し）

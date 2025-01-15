@@ -1,4 +1,4 @@
-import { CallState, SignalingMessage, rtcConfig } from './types';
+import { CallState, SignalingMessage, rtcConfig } from '../types/types';
 import { updateConnectionStatus, showError } from './ui';
 import { handleRemoteStream, getLocalStream, startAudioMeters } from './audio';
 import { sendSignalingMessage } from './websocket';
@@ -10,7 +10,7 @@ export async function initializePeerConnection(state: CallState): Promise<void> 
         console.log('RTCPeerConnection created');
 
         // ICE candidateの送信
-        state.peerConnection.onicecandidate = (event) => {
+        state.peerConnection.onicecandidate = (event: RTCPeerConnectionIceEvent) => {
             if (event.candidate) {
                 console.log('Sending ICE candidate');
                 sendSignalingMessage({
@@ -50,7 +50,7 @@ export async function initializePeerConnection(state: CallState): Promise<void> 
         };
 
         // リモートストリームの処理
-        state.peerConnection.ontrack = (event) => {
+        state.peerConnection.ontrack = (event: RTCTrackEvent) => {
             console.log('Remote track received:', event.track.kind);
             if (event.track.kind === 'audio') {
                 handleRemoteStream(event.streams[0], state);
@@ -75,7 +75,7 @@ export async function initializePeerConnection(state: CallState): Promise<void> 
         }
 
         // トラックを追加
-        state.localStream.getTracks().forEach(track => {
+        state.localStream.getTracks().forEach((track: MediaStreamTrack) => {
             console.log('Adding local track to peer connection:', track.kind);
             state.peerConnection!.addTrack(track, state.localStream!);
         });
@@ -153,7 +153,7 @@ export function handleCallEnd(state: CallState): void {
         state.audioContext = undefined;
     }
 
-    state.localStream?.getTracks().forEach(track => track.stop());
+    state.localStream?.getTracks().forEach((track: MediaStreamTrack) => track.stop());
     state.peerConnection?.close();
     state.websocket?.close();
 

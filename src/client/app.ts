@@ -1,4 +1,4 @@
-import { CallState } from './types';
+import { CallState } from '../types/types';
 import { elements, showError, toggleLoading, updateCallUI, updateMuteUI, updateConnectionStatus } from './ui';
 import { initializeAudioContext, startAudioMeters, getLocalStream } from './audio';
 import { connectWebSocket, sendSignalingMessage } from './websocket';
@@ -58,7 +58,7 @@ async function startCall(): Promise<void> {
 function toggleMute(): void {
     if (state.localStream) {
         state.isMuted = !state.isMuted;
-        state.localStream.getAudioTracks().forEach(track => {
+        state.localStream.getAudioTracks().forEach((track: MediaStreamTrack) => {
             track.enabled = !state.isMuted;
         });
         updateMuteUI(state.isMuted);
