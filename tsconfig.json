@@ -1,23 +1,27 @@
 {
   "compilerOptions": {
-    "target": "ES2016",
-    "module": "commonjs",
-    "rootDir": "./src",
-    "outDir": "./dist", // ベースでは dist 配下を想定
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist/server",
+    "rootDir": "./src/server", // serverディレクトリのみを対象に
     "strict": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
     "skipLibCheck": true,
     "lib": [
-      "es2016",
-      "dom"
-    ],
-    "sourceMap": true
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ]
   },
-  // ここでは include/exclude を最小限にして、
-  // サーバーやクライアント用の tsconfig.*.json が上書きしていくイメージ
-  "include": [],
+  "include": [
+    "src/server/**/*" // serverディレクトリのみをinclude
+  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist"
   ]
 }

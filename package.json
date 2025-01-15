@@ -1,29 +1,24 @@
 {
   "name": "simple-talk",
   "version": "1.0.0",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "typecheck": "tsc --noEmit -p tsconfig.server.json",
-    "build:server": "tsc -p tsconfig.server.json",
+    "build:server": "tsc",
     "build:client": "vite build",
-    "build": "npm run build:server && npm run build:client",
+    "build": "npx rimraf dist && npm run build:server && npm run build:client",
     "dev:client": "vite",
-    "watch:server": "tsc -w -p tsconfig.server.json",
-    "start:wss": "node dist/server/wss-server.js",
-    "start:https": "node dist/server/https-server.js",
+    "watch:server": "tsc -w",
+    "start:wss": "node --experimental-specifier-resolution=node dist/server/wss-server.js",
+    "start:https": "node --experimental-specifier-resolution=node dist/server/https-server.js",
     "generate-certs": "chmod +x scripts/generate-certs.sh && ./scripts/generate-certs.sh",
-    "dev": "npm run generate-certs && concurrently \"npm run watch:server\" \"npm run dev:client\" \"npm run start:wss\" \"npm run start:https\""
+    "dev": "npm run generate-certs && concurrently \"npm run watch:server\" \"npm run dev:client\" \"npm run start:https\""
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "devDependencies": {
     "@types/node": "^22.10.6",
     "@types/ws": "^8.5.10",
     "@vitejs/plugin-basic-ssl": "^1.0.2",
     "concurrently": "^8.2.2",
+    "rimraf": "^5.0.5",
     "typescript": "^5.7.3",
     "vite": "^5.0.12"
   },

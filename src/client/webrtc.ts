@@ -1,3 +1,4 @@
+// webrtc.ts
 import { CallState, SignalingMessage, rtcConfig } from '../types/types';
 import { updateConnectionStatus, showError } from './ui';
 import { handleRemoteStream, getLocalStream, startAudioMeters } from './audio';
@@ -15,7 +16,8 @@ export async function initializePeerConnection(state: CallState): Promise<void> 
                 console.log('Sending ICE candidate');
                 sendSignalingMessage({
                     type: 'ice-candidate',
-                    data: event.candidate
+                    data: event.candidate,
+                    room: state.roomId
                 }, state);
             }
         };
@@ -85,14 +87,40 @@ export async function initializePeerConnection(state: CallState): Promise<void> 
     }
 }
 
+// オファーの作成と送信
+export async function createAndSendOffer(state: CallState): Promise<void> {
+    try {
+        const offer = await state.peerConnection!.createOffer();
+        await state.peerConnection!.setLocalDescription(offer);
+        sendSignalingMessage({
+            type: 'offer',
+            data: offer,
+            room: state.roomId
+        }, state);
+    } catch (error) {
+        console.error('Error creating offer:', error);
+        throw error;
+    }
+}
+
 // シグナリングメッセージの処理
 export async function handleSignalingMessage(message: SignalingMessage, state: CallState): Promise<void> {
     try {
         switch (message.type) {
-            case 'connection-established':
-                state.clientId = message.clientId;
-                console.log('Connection established, client ID:', state.clientId);
-                updateConnectionStatus('シグナリングサーバーに接続済み', true);
+            case 'room-created':
+                console.log('Room created:', message.room);
+                state.roomId = message.room;
+                await createAndSendOffer(state);
+                break;
+
+            case 'joined':
+                console.log('Joined room:', message.room);
+                state.roomId = message.room;
+                break;
+
+            case 'guest-joined':
+                console.log('Guest joined, creating offer');
+                await createAndSendOffer(state);
                 break;
 
             case 'offer':
@@ -107,7 +135,7 @@ export async function handleSignalingMessage(message: SignalingMessage, state: C
                 sendSignalingMessage({
                     type: 'answer',
                     data: answer,
-                    to: message.from
+                    room: state.roomId
                 }, state);
                 break;
 
@@ -122,6 +150,13 @@ export async function handleSignalingMessage(message: SignalingMessage, state: C
                     console.log('Received ICE candidate');
                     await state.peerConnection?.addIceCandidate(new RTCIceCandidate(message.data));
                 }
+                break;
+
+            case 'host-left':
+            case 'guest-left':
+                console.log('Peer disconnected');
+                updateConnectionStatus('相手が切断しました');
+                handleCallEnd(state);
                 break;
         }
     } catch (error) {
@@ -161,6 +196,8 @@ export function handleCallEnd(state: CallState): void {
     state.remoteStream = undefined;
     state.peerConnection = undefined;
     state.websocket = undefined;
+    state.roomId = undefined;
+    state.isHost = undefined;
 
     updateConnectionStatus('切断済み');
 }

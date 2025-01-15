@@ -1,4 +1,4 @@
-// UI要素の型定義
+// types.ts
 export interface Elements {
     callButton: HTMLButtonElement;
     loadingIndicator: HTMLDivElement;
@@ -14,12 +14,13 @@ export interface Elements {
     connectionStatusText: HTMLSpanElement;
 }
 
-// 通話状態の型定義
 export interface CallState {
     isInCall: boolean;
     isMuted: boolean;
     isLoading: boolean;
     clientId?: string;
+    roomId?: string;
+    isHost?: boolean;
     localStream?: MediaStream;
     remoteStream?: MediaStream;
     peerConnection?: RTCPeerConnection;
@@ -31,16 +32,17 @@ export interface CallState {
     remoteAudio?: HTMLAudioElement;
 }
 
-// シグナリングメッセージの型定義
 export interface SignalingMessage {
-    type: 'connection-established' | 'offer' | 'answer' | 'ice-candidate';
+    type: 'offer' | 'answer' | 'ice-candidate' | 'create' | 'join' |
+    'connection-established' | 'room-created' | 'joined' |
+    'guest-joined' | 'host-left' | 'guest-left';
     data?: any;
     from?: string;
     to?: string;
+    room?: string;
     clientId?: string;
 }
 
-// WebRTC設定の型定義
 export const rtcConfig: RTCConfiguration = {
     iceServers: [
         { urls: 'stun:stun.l.google.com:19302' }
