@@ -4,19 +4,11 @@
         "outDir": "./dist/",
         "module": "ES6",
         "target": "ES2020",
-        // こちらも rootDir は "./src" を継承
-        "baseUrl": "./src",
-        "paths": {
-            "*": [
-                "*"
-            ]
-        },
-        "moduleResolution": "node"
+        "moduleResolution": "node",
+        "sourceMap": true
     },
     "include": [
-        // クライアント側ソース
         "src/client/**/*",
-        // 共通の型があれば含める
         "src/types/**/*"
     ],
     "exclude": [

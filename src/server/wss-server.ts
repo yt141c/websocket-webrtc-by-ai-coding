@@ -14,8 +14,8 @@ interface SignalingMessage {
 
 // HTTPSサーバーの設定
 const httpsServer = https.createServer({
-    key: fs.readFileSync(path.join(__dirname, '../certs/server.key')),
-    cert: fs.readFileSync(path.join(__dirname, '../certs/server.crt'))
+    key: fs.readFileSync(path.join(__dirname, '../../certs/server.key')),
+    cert: fs.readFileSync(path.join(__dirname, '../../certs/server.crt'))
 });
 
 // WebSocketサーバーの設定
