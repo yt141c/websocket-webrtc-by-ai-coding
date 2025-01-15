@@ -1,0 +1,109 @@
+name: Simple Call App
+description: One-page web application for simple calls within the same local network.
+
+features:
+  user_interface:
+    description: Single-page web interface with call controls.
+    elements:
+      call_button:
+        id: callButton
+        type: button
+        label: Call
+        description: Initiates the call process. Centered on the screen.
+        behavior:
+          on_click:
+            actions:
+              - show_loading_indicator
+              - initiate_signaling
+      loading_indicator:
+        id: loadingIndicator
+        type: div
+        content: Loading...
+        description: Visual feedback during connection establishment. Initially hidden.
+        visibility: hidden
+      mute_button:
+        id: muteButton
+        type: button
+        label: Mute
+        description: Toggles microphone mute during a call. Initially visible only during a call.
+        visibility: hidden
+        behavior:
+          on_click:
+            actions:
+              - toggle_mute
+      hang_up_button:
+        id: hangUpButton
+        type: button
+        label: Hang Up
+        description: Ends the current call. Initially visible only during a call.
+        visibility: hidden
+        behavior:
+          on_click:
+            actions:
+              - terminate_call
+      error_message:
+        id: errorMessage
+        type: div
+        content: ""
+        description: Displays error messages if any failure occurs (e.g., permission denied, connection error).
+        visibility: hidden
+
+  call_functionality:
+    description: Core call logic using WebRTC.
+    functions:
+      call_initiation:
+        description: Establishes a peer-to-peer connection.
+        steps:
+          - gather_media_stream: Access user's microphone.
+          - create_offer: Create a WebRTC offer.
+          - exchange_sdp: Exchange SDP offers and answers via signaling.
+          - exchange_ice_candidates: Exchange ICE candidates via signaling.
+          - establish_connection: Establish the WebRTC connection.
+      two_way_audio:
+        description: Enables two-way audio communication.
+      mute_functionality:
+        description: Toggles the microphone track's enabled state.
+      call_termination:
+        description: Closes the WebRTC connection and signaling channel.
+
+  signaling:
+    description: Mechanism for exchanging signaling data (SDP, ICE candidates).
+    type: websocket
+    address: ws://localhost:8080 # For local testing
+    # 追加: WebSocketサーバの起動や配信形態を明確化
+    server_implementation:
+      description: Node.js (ws) または Python の WebSocketライブラリなどを使用して起動可能
+      command_example: node server.js
+
+  media_access:
+    description: Access to user's microphone.
+    api: getUserMedia
+    error_handling:
+      description: If microphone access is denied, an error message is displayed in errorMessage.
+
+  webrtc_connection:
+    description: Peer-to-peer connection.
+    api: RTCPeerConnection
+    # ローカルネットワーク接続でも環境により STUN サーバが必要になる場合を考慮
+    recommendation:
+      stun_server: stun:stun.l.google.com:19302
+
+  development_environment:
+    description: Development environment and code quality.
+    requirements:
+      version_control: git
+      code_comments: required
+      typescript_support:
+        required: true
+        type_check_command: npm run typecheck
+      no_type_error: required
+
+non_functional_requirements:
+  performance:
+    description: Low latency audio communication.
+  usability:
+    description: Simple and intuitive user interface.
+  error_handling:
+    description: Provide user-friendly error messages for common failures (e.g., getUserMedia rejection, WebSocket connection error).
+  testing_approach:
+    description: Perform incremental testing at the end of each major phase to catch issues early, in addition to final overall testing.

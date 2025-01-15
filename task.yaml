@@ -1,0 +1,257 @@
+tasks:
+  - phase: プロジェクト初期設定
+    items:
+      - id: 1.1
+        description: プロジェクトフォルダ作成 (例: simple-call-app)
+        status: incomplete
+      - id: 1.2
+        description: Gitリポジトリ初期化 (git init)
+        status: incomplete
+      - id: 1.3
+        description: HTML (index.html), CSS (style.css), JS/TS (script.js/ts) ファイル作成
+        status: incomplete
+      - id: 1.4
+        description: (TypeScriptの場合) TypeScript設定
+        status: incomplete
+        sub_tasks:
+          - id: 1.4.1
+            description: package.json作成 (npm init -y)
+            status: incomplete
+          - id: 1.4.2
+            description: TypeScriptインストール (npm install --save-dev typescript @types/node)
+            status: incomplete
+          - id: 1.4.3
+            description: tsconfig.json作成 (npx tsc --init)
+            status: incomplete
+          - id: 1.4.4
+            description: npm run typecheckスクリプト追加
+            status: incomplete
+      - id: 1.5
+        description: 基本的なHTML構造作成
+        status: incomplete
+        sub_tasks:
+          - id: 1.5.1
+            description: 基本的なHTMLタグ追加
+            status: incomplete
+          - id: 1.5.2
+            description: 通話開始ボタンのプレースホルダー追加
+            status: incomplete
+          - id: 1.5.3
+            description: ローディング表示要素追加
+            status: incomplete
+          - id: 1.5.4
+            description: スタイルシートリンク
+            status: incomplete
+          - id: 1.5.5
+            description: JS/TSファイルリンク
+            status: incomplete
+
+      - id: 1.6
+        description: フェーズ1テスト(動作確認)
+        status: incomplete
+        sub_tasks:
+          - id: 1.6.1
+            description: npm run typecheck で型エラーがないことを確認
+            status: incomplete
+          - id: 1.6.2
+            description: 簡易HTTPサーバ(例: npm install -g serve など)でindex.htmlが表示できるか確認
+            status: incomplete
+
+  - phase: UI実装
+    items:
+      - id: 2.1
+        description: 通話開始ボタンの作成とスタイリング
+        status: incomplete
+        sub_tasks:
+          - id: 2.1.1
+            description: ボタンを画面中央に配置
+            status: incomplete
+          - id: 2.1.2
+            description: ボタンのスタイルを設定
+            status: incomplete
+      - id: 2.2
+        description: ローディングインジケーターの実装
+        status: incomplete
+        sub_tasks:
+          - id: 2.2.1
+            description: ローディングアニメーション追加
+            status: incomplete
+          - id: 2.2.2
+            description: JS/TSで表示/非表示を制御
+            status: incomplete
+      - id: 2.3
+        description: ミュートボタンの作成
+        status: incomplete
+        sub_tasks:
+          - id: 2.3.1
+            description: ボタン作成
+            status: incomplete
+          - id: 2.3.2
+            description: 初期状態: 非表示
+            status: incomplete
+      - id: 2.4
+        description: 切断ボタンの作成
+        status: incomplete
+        sub_tasks:
+          - id: 2.4.1
+            description: ボタン作成
+            status: incomplete
+          - id: 2.4.2
+            description: 初期状態: 非表示
+            status: incomplete
+
+      - id: 2.5
+        description: エラー表示要素の実装
+        status: incomplete
+        sub_tasks:
+          - id: 2.5.1
+            description: errorMessage 用の <div> または要素を作成
+            status: incomplete
+          - id: 2.5.2
+            description: JS/TSからエラーメッセージを表示/非表示にできるようにする
+            status: incomplete
+
+      - id: 2.6
+        description: フェーズ2テスト(動作確認)
+        status: incomplete
+        sub_tasks:
+          - id: 2.6.1
+            description: UI要素の配置とスタイルをブラウザで確認
+            status: incomplete
+          - id: 2.6.2
+            description: コンソールエラーが出ていないか確認
+            status: incomplete
+
+  - phase: WebRTC実装
+    items:
+      - id: 3.1
+        description: メディアストリーム取得
+        status: incomplete
+        sub_tasks:
+          - id: 3.1.1
+            description: getUserMediaでマイクアクセス許可を要求
+            status: incomplete
+          - id: 3.1.2
+            description: 取得したストリームを保存
+            status: incomplete
+          - id: 3.1.3
+            description: ユーザーがマイクアクセスを拒否した場合のエラーハンドリング
+            status: incomplete
+      - id: 3.2
+        description: RTCPeerConnectionオブジェクト作成
+        status: incomplete
+        sub_tasks:
+          - id: 3.2.1
+            description: RTCIceServerを設定 (推奨: stun:stun.l.google.com:19302)
+            status: incomplete
+      - id: 3.3
+        description: シグナリング処理 (WebSocket)
+        status: incomplete
+        sub_tasks:
+          - id: 3.3.1
+            description: WebSocketサーバー起動 (Node.js または Python 等)
+            status: incomplete
+          - id: 3.3.2
+            description: WebSocket接続確立
+            status: incomplete
+          - id: 3.3.3
+            description: Offer/Answer交換ロジック実装
+            status: incomplete
+          - id: 3.3.4
+            description: ICE Candidate交換ロジック実装
+            status: incomplete
+          - id: 3.3.5
+            description: WebSocket接続エラー時のエラーハンドリング
+            status: incomplete
+      - id: 3.4
+        description: 通話開始処理
+        status: incomplete
+        sub_tasks:
+          - id: 3.4.1
+            description: ボタンクリックでシグナリング開始
+            status: incomplete
+          - id: 3.4.2
+            description: ローディング表示
+            status: incomplete
+      - id: 3.5
+        description: メディアストリーム受信と再生
+        status: incomplete
+        sub_tasks:
+          - id: 3.5.1
+            description: ontrackイベントハンドラでストリームを取得
+            status: incomplete
+          - id: 3.5.2
+            description: <audio>要素を作成し再生
+            status: incomplete
+      - id: 3.6
+        description: ミュート機能
+        status: incomplete
+        sub_tasks:
+          - id: 3.6.1
+            description: ボタンクリックでMediaStreamTrack.enabledを切り替え
+            status: incomplete
+      - id: 3.7
+        description: 切断機能
+        status: incomplete
+        sub_tasks:
+          - id: 3.7.1
+            description: RTCPeerConnectionをクローズ
+            status: incomplete
+          - id: 3.7.2
+            description: WebSocket接続をクローズ
+            status: incomplete
+      - id: 3.8
+        description: コードコメント
+        status: incomplete
+
+      - id: 3.9
+        description: フェーズ3テスト(基本動作確認)
+        status: incomplete
+        sub_tasks:
+          - id: 3.9.1
+            description: 実際に同一ネットワーク上の端末間で通話が開始できるか確認
+            status: incomplete
+          - id: 3.9.2
+            description: getUserMedia許可拒否時のエラー表示確認
+            status: incomplete
+          - id: 3.9.3
+            description: WebSocketサーバ停止時のエラーメッセージ確認
+            status: incomplete
+
+  - phase: テストとデバッグ
+    items:
+      - id: 4.1
+        description: ローカル環境での総合テスト
+        status: incomplete
+        sub_tasks:
+          - id: 4.1.1
+            description: 同じWi-Fiネットワーク内の異なるデバイスでテスト
+            status: incomplete
+          - id: 4.1.2
+            description: 異なるブラウザでテスト (Chrome, Firefox, Safari, Edgeなど)
+            status: incomplete
+      - id: 4.2
+        description: ブラウザ間の互換性テスト
+        status: incomplete
+      - id: 4.3
+        description: パフォーマンスと安定性のテスト
+        status: incomplete
+      - id: 4.4
+        description: 型エラーのチェック (npm run typecheck)と修正
+        status: incomplete
+
+  - phase: ドキュメント作成
+    items:
+      - id: 5.1
+        description: READMEファイルの作成
+        status: incomplete
+        sub_tasks:
+          - id: 5.1.1
+            description: プロジェクトの概要
+            status: incomplete
+          - id: 5.1.2
+            description: 実行方法 (WebSocketサーバの起動手順も含む)
+            status: incomplete
+          - id: 5.1.3
+            description: 使用技術
+            status: incomplete
