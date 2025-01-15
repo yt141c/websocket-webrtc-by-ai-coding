@@ -110,3 +110,5 @@ export function initializeApp(): void {
     initializeEventListeners();
     console.log('Application initialized');
 }
+
+export { handleCallEnd };
