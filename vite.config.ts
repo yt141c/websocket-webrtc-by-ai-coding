@@ -1,12 +1,12 @@
 import { defineConfig } from 'vite';
-import basicSsl from '@vitejs/plugin-basic-ssl';
+import fs from 'fs';
 
 export default defineConfig({
-    plugins: [basicSsl()],
     server: {
         port: 3000,
         https: {
-            // basicSslプラグインが自動的に証明書を生成します
+            key: fs.readFileSync('certs/server.key'),
+            cert: fs.readFileSync('certs/server.crt')
         }
     },
     build: {
