@@ -36,6 +36,26 @@ body {
     margin: 16px;
     font-size: 14px;
     color: #666;
+    position: relative;
+}
+
+.loading-indicator::after {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-left: 8px;
+    border: 2px solid #666;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* エラーメッセージ */
@@ -46,6 +66,14 @@ body {
     background-color: #f8d7da;
     border: 1px solid #f5c6cb;
     border-radius: 4px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.error-message:not(.hidden) {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* 非表示クラス */
@@ -62,10 +90,25 @@ body {
     background-color: #545b62;
 }
 
+#muteButton.muted {
+    background-color: #dc3545;
+}
+
 #hangUpButton {
     background-color: #dc3545;
 }
 
 #hangUpButton:hover {
     background-color: #c82333;
+}
+
+/* ボタンのアクティブ状態 */
+.button:active {
+    transform: scale(0.98);
+}
+
+/* ボタンの無効化状態 */
+.button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
 }

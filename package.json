@@ -6,7 +6,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "typecheck": "tsc --noEmit",
     "build": "tsc",
-    "watch": "tsc -w"
+    "watch": "tsc -w",
+    "start:server": "node dist/server.js",
+    "dev": "npm run build && concurrently \"npm run watch\" \"npm run start:server\" \"serve .\""
   },
   "keywords": [],
   "author": "",
@@ -14,6 +16,11 @@
   "description": "",
   "devDependencies": {
     "@types/node": "^22.10.6",
+    "@types/ws": "^8.5.10",
+    "concurrently": "^8.2.2",
     "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "ws": "^8.16.0"
   }
 }
